@@ -1,48 +1,96 @@
-import { Component } from "react";
+import { useState} from "react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PropTypes from "prop-types"
 import s from "./SearchBar.module.css"
 
-export class SearchBar extends Component { 
+
+
+export const SearchBar = ({onSubmit}) => { 
     
-    state = {
-        value : ""
-    }
+const [value, setValue] = useState("")
     
-    handleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
-        if (this.state.value.trim() !== "") {
-                 this.props.onSubmit(this.state.value)
-                this.setState({value: ""})   
+        if (value.trim() !== "") {
+                onSubmit(value)
+                setValue("")   
         }else{
         return toast.error("You're request is empty")}
-
     }
 
-    handleChange = (event) => {
+   const handleChange = (event) => {
         const {value} = event.target
-        return this.setState({value: value})}
+        return setValue(value)}
     
     
-    render() {return <header className={s.Searchbar}>
-  <form className={s.searchForm} onSubmit={this.handleSubmit}>
+return <header className={s.Searchbar}>
+  <form className={s.searchForm} onSubmit={handleSubmit}>
     <button type="submit" className={s.button}>
       <span className={s.buttonLabel}>Search</span>
     </button>
 
     <input
-        onChange={this.handleChange}
-        value={this.state.value}
+        onChange={handleChange}
+        value={value}
       className={s.input}
       type="text"
       placeholder="Search images and photos"
     />
   </form>
 </header>
-    }
 }
 
-SearchBar.propTypes = {
-    onSubmit: PropTypes.func
-}
+
+
+
+
+
+
+
+
+
+
+
+
+// export class SearchBar extends Component { 
+    
+//     state = {
+//         value : ""
+//     }
+    
+//     handleSubmit = (event) => {
+//         event.preventDefault()
+//         if (this.state.value.trim() !== "") {
+//                  this.props.onSubmit(this.state.value)
+//                 this.setState({value: ""})   
+//         }else{
+//         return toast.error("You're request is empty")}
+
+//     }
+
+//     handleChange = (event) => {
+//         const {value} = event.target
+//         return this.setState({value: value})}
+    
+    
+//     render() {return <header className={s.Searchbar}>
+//   <form className={s.searchForm} onSubmit={this.handleSubmit}>
+//     <button type="submit" className={s.button}>
+//       <span className={s.buttonLabel}>Search</span>
+//     </button>
+
+//     <input
+//         onChange={this.handleChange}
+//         value={this.state.value}
+//       className={s.input}
+//       type="text"
+//       placeholder="Search images and photos"
+//     />
+//   </form>
+// </header>
+//     }
+// }
+
+// SearchBar.propTypes = {
+//     onSubmit: PropTypes.func
+// }
